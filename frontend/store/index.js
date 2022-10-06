@@ -6,7 +6,18 @@ export const state = () => ({
     tradeIns: [],
     tradeInSmartphones: [],
     payments: [],
+    price: 0,
 });
+
+export const actions = {
+    fetchSpecs (context) {
+        this.$axios
+            .get('/api/starphone')
+            .then(response => {
+                context.commit('SET_VERSIONS', response.data);
+            }); 
+    }
+}
 
 export const mutations = {
     SET_VERSIONS(state, versions) {
@@ -29,5 +40,8 @@ export const mutations = {
     },
     SET_PAYMENTS(state, payments) {
         state.payments = payments;
+    },
+    UPDATE_PRICE(state, price) {
+        state.price = price
     },
 }
