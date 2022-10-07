@@ -1,4 +1,5 @@
 export const state = () => ({
+    informations: [],
     versions: [],
     models: [],
     colors: [],
@@ -6,6 +7,7 @@ export const state = () => ({
     tradeIns: [],
     tradeInSmartphones: [],
     payments: [],
+    selectedSpecs: [],
     price: 0,
 });
 
@@ -14,12 +16,32 @@ export const actions = {
         this.$axios
             .get('/api/starphone')
             .then(response => {
-                context.commit('SET_VERSIONS', response.data);
-            }); 
+                context.commit('SET_INFORMATIONS', response.data);
+                context.commit('SET_VERSIONS', response.data[0].children);
+                context.commit('SET_MODELS', response.data[1].children);
+                context.commit('SET_COLORS', response.data[2].children);
+                context.commit('SET_STORAGES', response.data[3].children);
+                context.commit('SET_TRADE_INS', response.data[4].children);
+                context.commit('SET_TRADE_IN_SMARTPHONES', response.data[5].children);
+                context.commit('SET_PAYMENTS', response.data[6].children);
+            });
+    },
+
+    chooseVersion (context, version) {
+        const selectedVersion = context.state.versions.find(item => item.id === version.id);
+
+        if(!selectedVersion) {
+            context.commit('REMOVE_SPEC', selectedVersion);
+        } else {
+            context.commit('ADD_SPEC', selectedVersion);
+        }
     }
 }
 
 export const mutations = {
+    SET_INFORMATIONS(state, informations) {
+        state.informations = informations;
+    },
     SET_VERSIONS(state, versions) {
         state.versions = versions;
     },
@@ -41,7 +63,10 @@ export const mutations = {
     SET_PAYMENTS(state, payments) {
         state.payments = payments;
     },
-    UPDATE_PRICE(state, price) {
-        state.price = price
+    ADD_PRICE(state, price) {
+        state.price += price
     },
+    REDUCE_PRICE(state, price) {
+        state.price -= price
+    }
 }

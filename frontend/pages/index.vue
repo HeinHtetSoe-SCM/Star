@@ -1,33 +1,15 @@
 <template>
   <main>
-  <!-- <b-button 
+  <b-button 
     variant="outline-primary" 
     class="btns"
-    v-for="spec in specs"
-    :key="spec.id"
-    :to="`/specs/${spec.id}`"
+    v-for="info in informations"
+    :key="info.id"
+    :to="`/specifications/${info.id}`"
     >
-    {{spec.title}}
-  </b-button> -->
-  <article>
-    <!-- {{info['data']}} -->
-    <ol>
-      <li 
-        v-for="sample in info" 
-        :key="sample.id"
-        > 
-        {{sample.title}}
-        <ol>
-          <li 
-          v-for="model in sample.children"
-          :key="model.id"
-          >
-          {{model.title}}
-          </li>
-        </ol>
-      </li>
-    </ol>
-  </article>
+    {{info.title}}
+  </b-button>
+  <h1>STAR WALKIN'</h1>
   </main>
 </template>
 
@@ -36,17 +18,24 @@ export default {
   name: 'IndexPage',
   data () {
     return {
-      info: null,
       selected: '',
     }
   },
   computed: {
-    specs () {
-      return this.$store.state.specs.all;
-    },
     versions () {
       return this.$store.state.versions;
+    },
+    models () {
+      return this.$store.state.models;
+    },
+    informations () {
+      return this.$store.state.informations;
     }
+  },
+  methods: {
+    chooseSpec (version) {
+      this.$store.dispatch('chooseVersion', version);
+    },
   },
   head () {
     return {
@@ -54,9 +43,6 @@ export default {
     }
   },
   mounted () {
-    this.$axios
-      .get('/api/starphone')
-      .then(response => (this.info = response.data));
     this.$store.dispatch('fetchSpecs');
   },
 }

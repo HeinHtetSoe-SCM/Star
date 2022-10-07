@@ -2,6 +2,7 @@
   <b-container>
     <NavBar />
     <nuxt />
+    <FooterBar />
   </b-container>
 </template>
 

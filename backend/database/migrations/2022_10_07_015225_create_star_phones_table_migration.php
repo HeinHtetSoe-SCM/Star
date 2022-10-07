@@ -18,6 +18,7 @@ class CreateStarPhonesTableMigration extends Migration
                 ->on('star_phones')
                 ->onDelete('set null');
             $table->string('title');
+            $table->integer('price')->nullable();
             $table->timestamps();
         });
 

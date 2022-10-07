@@ -13,7 +13,7 @@
               <nuxt-link :to="`/specs/versions`">Specs</nuxt-link>
             </b-nav-item>
             <b-nav-item>About Us</b-nav-item>
-            <b-nav-item active :to="`/versions`">Buy</b-nav-item>
+            <b-nav-item active :to="`/specifications/1`">Buy</b-nav-item>
           </b-nav>
         </b-col>
       </b-row>
@@ -23,7 +23,11 @@
 
 <script>
 export default {
+  data () {
+    return {
 
+    }
+  },
 }
 </script>
 
