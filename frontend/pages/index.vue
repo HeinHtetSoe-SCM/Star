@@ -1,14 +1,5 @@
 <template>
   <main>
-  <b-button 
-    variant="outline-primary" 
-    class="btns"
-    v-for="info in informations"
-    :key="info.id"
-    :to="`/specifications/${info.id}`"
-    >
-    {{info.title}}
-  </b-button>
   <h1>STAR WALKIN'</h1>
   </main>
 </template>

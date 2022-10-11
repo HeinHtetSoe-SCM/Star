@@ -2,12 +2,15 @@
   <b-container>
     <NavBar />
     <nuxt />
-    <FooterBar />
   </b-container>
 </template>
 
 <script>
-
+export default {
+  mounted () {
+    this.$store.dispatch('fetchSpecs')
+  }
+}
 </script> 
 
 <style>

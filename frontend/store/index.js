@@ -11,6 +11,12 @@ export const state = () => ({
     price: 0,
 });
 
+export const getters = {
+    tradeInSmartphones (state, getters) {
+        
+    }
+}
+
 export const actions = {
     fetchSpecs (context) {
         this.$axios
@@ -27,15 +33,23 @@ export const actions = {
             });
     },
 
-    chooseVersion (context, version) {
-        const selectedVersion = context.state.versions.find(item => item.id === version.id);
+    pushSpec ( context, spec ) {
+        const check = context.state.selectedSpecs.find(selectedSpec => selectedSpec.parent_id === spec.parent_id);
+        if(check) {
+            context.commit('REMOVE_SPEC', check);
+            context.commit('ADD_SPEC', spec);
 
-        if(!selectedVersion) {
-            context.commit('REMOVE_SPEC', selectedVersion);
+            if(check.price != null && spec.price != null) {
+                context.commit('REDUCE_PRICE', check.price);
+                context.commit('ADD_PRICE', spec.price);
+            }
         } else {
-            context.commit('ADD_SPEC', selectedVersion);
+            context.commit('ADD_SPEC', spec);
+            if(spec.price != null) {
+                context.commit('ADD_PRICE', spec.price);
+            }
         }
-    }
+    },
 }
 
 export const mutations = {
@@ -64,9 +78,15 @@ export const mutations = {
         state.payments = payments;
     },
     ADD_PRICE(state, price) {
-        state.price += price
+        state.price += price;
     },
     REDUCE_PRICE(state, price) {
-        state.price -= price
+        state.price -= price;
+    },
+    ADD_SPEC(state, spec) {
+        state.selectedSpecs.push(spec);
+    },
+    REMOVE_SPEC(state, spec) {
+        state.selectedSpecs.splice(state.selectedSpecs.indexOf(spec), 1);
     }
 }
