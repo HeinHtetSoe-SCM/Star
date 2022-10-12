@@ -1,38 +1,55 @@
 <template>
   <div>
-    <div v-if="id !== 6">
+    <div v-if="relatedModels && id === 2">
+        <b-button
+        v-for="info in relatedModels"
+        :key="info.id"
+        @click="addSpec(info)"
+        >
+            <b-form-radio
+                name="specifications" 
+                :value="info"
+                @change="addSpec(info)"
+                v-model="selected"
+            >
+                {{info.title}} <span v-if="info.price != null"> ${{info.price}}</span>
+            </b-form-radio>
+        </b-button>      
+    </div>
+    <div v-else-if="id === 6">
         <b-button
         v-for="info in information.children"
         :key="info.id"
         @click="addSpec(info)"
         >
             <b-form-radio
-                name="some-radios" 
+                name="smartphones" 
                 :value="info"
                 @change="addSpec(info)"
                 v-model="selected"
             >
-                {{info.title}} <span v-if="info.price != null"> - +${{info.price}}</span>
+                {{info.title}} <span v-if="info.price != null"> ${{info.price}}</span>
             </b-form-radio>
         </b-button>
         <div>
-            <b-button 
-                variant="outline-primary" 
-                v-if="id != 1"
-                :to="`/specifications/${id-1}`"
+            <b-button
+            v-for="info in tradeInSmartphoneStorages"
+            variant="primary"
+            :key="info.id"
+            @click="tradeInDiscount(info)"
             >
-                Previous
-            </b-button>
-            <b-button 
-                variant="outline-primary" 
-                v-if="id != 7"
-                :to="`/specifications/${id+1}`"
-            >
-                Next
+                <b-form-radio
+                    name="storages" 
+                    :value="info"
+                    @change="tradeInDiscount(info)"
+                    v-model="selectedTradeInStorage"
+                    >
+                    {{info.title}} <span v-if="info.price != null"> -${{info.price}}</span>
+                </b-form-radio>
             </b-button>
         </div>
     </div>
-    <div v-else-if="id === 6 && this.$store.state.selectedSpecs.find(info => info.id === 23)">
+    <div v-else>
         <b-button
         v-for="info in information.children"
         :key="info.id"
@@ -44,25 +61,17 @@
                 @change="addSpec(info)"
                 v-model="selected"
             >
-                {{info.title}} <span v-if="info.price != null"> - +${{info.price}}</span>
+                {{info.title}} <span v-if="info.price != null"> ${{info.price}}</span>
             </b-form-radio>
         </b-button>
-        <div>
-            <b-button 
-                variant="outline-primary" 
-                v-if="id != 1"
-                :to="`/specifications/${id-1}`"
-            >
-                Previous
-            </b-button>
-            <b-button 
-                variant="outline-primary" 
-                v-if="id != 7"
-                :to="`/specifications/${id+1}`"
-            >
-                Next
-            </b-button>
-        </div>
+    </div>
+    <div>
+        <b-button 
+        v-if="id === 7"
+        :to="`/checkout`"
+        >
+            Check out
+        </b-button>
     </div>
 </div>
 </template>
@@ -74,7 +83,7 @@ export default {
             id: parseInt(this.$route.params.id),
             selected: this.$store.state.selectedSpecs.find( 
                 i => i.parent_id === parseInt(this.$route.params.id) 
-                ),
+            ),
         }
     },
     computed: {
@@ -84,15 +93,32 @@ export default {
         selectedSpec () {
             return this.$store.state.selectedSpecs;
         },
+        relatedModels () {
+            return this.$store.getters.standardModels;
+        },
+        tradeInSmartphoneStorages () {
+            return this.$store.getters.tradeInSmartphoneStorages;
+        },
+        selectedTradeInStorage () {
+            if(this.$store.state.selectedSpecs.find(
+                item => item.id === 23
+            )) {
+                return this.$store.state.tradeInStorages.find(
+                    i => this.$store.getters.tradeInSmartphoneStorages.find(j => j.parent_id === i.parent_id)
+                )
+            } else {
+                return false;
+            }
+        }
     },
     methods: {
         addSpec(spec) {
             this.$store.dispatch('pushSpec', spec);
+        },
+        tradeInDiscount (spec) {
+            this.$store.dispatch('tradeInDiscount', spec);
         }
     },
-    mounted () {
-        console.log(this.$route.params.id)
-    }
 }
 </script>
 

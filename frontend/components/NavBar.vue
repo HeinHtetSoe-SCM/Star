@@ -9,9 +9,6 @@
         </b-col>
         <b-col class="clearfix">
           <b-nav pills class="nav">
-            <b-nav-item>
-              <nuxt-link :to="`/specs/versions`">Specs</nuxt-link>
-            </b-nav-item>
             <b-nav-item>About Us</b-nav-item>
             <b-nav-item active :to="`/specifications/1`">Buy</b-nav-item>
           </b-nav>
