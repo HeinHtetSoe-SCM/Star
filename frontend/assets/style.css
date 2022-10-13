@@ -1,6 +1,18 @@
 h1 {
-    color: chocolate;
+    color: #06283D;
     font-size: 36px;
-    font-weight: 900;
     text-align: center;
+}
+
+p {
+    color: #256D85;
+}
+
+a {
+    text-decoration: none !important;
+    color: #47B5FF;
+}
+
+li {
+    color: #06283D;
 }

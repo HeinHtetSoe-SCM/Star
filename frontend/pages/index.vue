@@ -1,12 +1,27 @@
 <template>
-  <main>
-  <h1>STAR WALKIN'</h1>
-  </main>
+  <div>
+    <main>
+      <h1>Star Phone 1</h1>
+      <p class="buy-link">Collaborated with <a href="https://lol.garena.com">League of Legends</a></p>
+      <p class="buy-link">Checkout this new song! <a href="https://www.youtube.com/watch?v=HYsz1hP0BFo">STAR WALKIN'</a></p>
+      <NuxtLink to="/specifications/1" class="buy-link">Buy ></NuxtLink>
+      <br>
+      <img src="~/assets/img/starPhone.jpg" alt="starphone">
+    </main>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'IndexPage',
+  head () {
+    return {
+      title: 'Star',
+    }
+  },
+  mounted () {
+    this.$store.dispatch('fetchSpecs');
+  },
   data () {
     return {
       selected: '',
@@ -28,19 +43,19 @@ export default {
       this.$store.dispatch('chooseVersion', version);
     },
   },
-  head () {
-    return {
-      title: 'Home Page',
-    }
-  },
-  mounted () {
-    this.$store.dispatch('fetchSpecs');
-  },
 }
 </script>
 
-<style>
-  .btns {
-    margin-right: 5px;
+<style scoped>
+  main {
+    text-align: center;
+  }
+  img {
+    width: 70%;
+    height: 70%;
+    margin-top: 5px;
+  }
+  .buy-link {
+    font-size: 24px;
   }
 </style>

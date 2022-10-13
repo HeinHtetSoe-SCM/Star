@@ -4,14 +4,8 @@
       <b-row fluid>
         <b-col>
           <nuxt-link :to="{name: 'index'}">
-            <h1 class="title">Star</h1>
+            <h1 class="title">&#9733; Star</h1>
           </nuxt-link>
-        </b-col>
-        <b-col class="clearfix">
-          <b-nav pills class="nav">
-            <b-nav-item>About Us</b-nav-item>
-            <b-nav-item active :to="`/specifications/1`">Buy</b-nav-item>
-          </b-nav>
         </b-col>
       </b-row>
     </b-container>
@@ -35,12 +29,18 @@ export default {
     display: table;
   }
   .title {
+    color: white;
     text-align: left;
+    font-size: 24px;
   }
   .nav {
     float: right;
   }
   .container {
-    margin-top: 5px;
+    margin-top: 0px;
+  }
+
+  div {
+    background-color: #06283D;
   }
 </style>

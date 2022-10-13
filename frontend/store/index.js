@@ -49,8 +49,17 @@ export const getters = {
                 });
             }
         }
-
         return result;
+    },
+    checkOutCard (state, getters) {
+        const checkOut = state.selectedSpecs;
+        return checkOut.map(check => {
+            return {
+                title: state.informations.find(info => info.id === check.parent_id).title,
+                description: check.title,
+                parent_id: check.parent_id
+            }
+        })
     }
 }
 

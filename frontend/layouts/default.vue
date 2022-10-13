@@ -15,6 +15,6 @@ export default {
 
 <style>
   h1 {
-    color: blueviolet;
+    color: #06283D;
   }
 </style>

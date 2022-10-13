@@ -7,6 +7,7 @@
           v-for="tab in tradeInTabs"
           :key="tab.id"
           :to="`/specifications/${tab.id}`"
+          class="tabs"
         >
           {{ tab.title }}
         </b-nav-item>
@@ -15,10 +16,6 @@
     <div>
         <nuxt-child :data="data" />
     </div>
-    <footer>
-      <h1 v-if="payMonthly">Pay: ${{parseFloat(totalPrice / 12).toFixed(2)}} per month. <span>Total: ${{totalPrice}}</span></h1>
-      <h1 v-else>Total: ${{totalPrice}}</h1>
-    </footer>
   </main>
 </template>
 
@@ -33,23 +30,18 @@ export default {
     tabs() {
       return this.$store.state.informations;
     },
-    totalPrice () {
-      return this.$store.state.price;
-    },
     tradeInTabs () {
       return this.$store.getters.tradeInTabs;
     },
-    payMonthly () {
-      return this.$store.state.selectedSpecs.find(
-        selectedSpec => selectedSpec.id === 85
-      )
-    }
   },
 }
 </script>
 
-<style>
+<style scoped>
 b-nav {
   display: block !important;
+}
+.tabs {
+  color: #06283D !important;
 }
 </style>
