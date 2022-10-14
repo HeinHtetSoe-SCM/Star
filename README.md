@@ -17,16 +17,18 @@ $ cd backend
 ```bash
 $ composer install
 ```
-3. Install closure table 
+3. Install xampp if you don't have.
+4. Run MySQL and Apache
+5. Connect your database in .env file
+6. Install closure table 
 ```bash 
 $ composer require franzose/closure-table
 ```
-4. Create closure table 
+7. Create closure table 
 ```bash 
 $ php artisan closuretable:make StarPhone
 ```
-5. Connect your database in .env file
-6. After that, run these following commands
+8. After that, run these following commands
 ```bash 
 $ php artisan migrate
 ```
