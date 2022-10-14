@@ -21,12 +21,12 @@ $ composer install
 ```bash 
 $ composer require franzose/closure-table
 ```
-5. Create closure table 
+4. Create closure table 
 ```bash 
 $ php artisan closuretable:make StarPhone
 ```
-7. Connect your database in .env file
-8. After that, run these following commands
+5. Connect your database in .env file
+6. After that, run these following commands
 ```bash 
 $ php artisan migrate
 ```
