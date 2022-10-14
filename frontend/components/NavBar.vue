@@ -14,33 +14,18 @@
 
 <script>
 export default {
-  data () {
-    return {
 
-    }
-  },
 }
 </script>
 
 <style scoped>
-  .clearfix {
-    clear: both;
-    content: '';
-    display: table;
-  }
   .title {
     color: white;
     text-align: left;
     font-size: 24px;
   }
-  .nav {
-    float: right;
-  }
   .container {
     margin-top: 0px;
-  }
-
-  div {
     background-color: #06283D;
   }
 </style>

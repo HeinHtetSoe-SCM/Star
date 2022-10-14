@@ -1,13 +1,15 @@
 <template>
   <div>
     <b-row class="row">
+      <!-- Show selected specifications -->
       <b-col>
         <div class="content">
           <b-card title="Your Star Phone's" sub-title="Selected Specifications">
+            <hr>
             <b-card-text v-for="info in checkOut" :key="info.id">
               <span style="color: #06283d">&#9733; {{ info.title }}</span> :
               {{ info.description }}
-              <span v-if="info.parent_id === 6">
+              <span v-if="info.parent_id === tradeInSmartPhonePageId">
                 ,
                 {{ selectedTradeInStorage ? selectedTradeInStorage.title : '' }}
               </span>
@@ -18,78 +20,101 @@
           </b-card>
         </div>
       </b-col>
+      <!-- specification selection -->
       <b-col>
         <div>
           <b-card :title="cardTitles[id-1].title">
-            <div v-if="relatedModels && id === 2">
-              <b-button
+            <!-- show at model page  -->
+            <div v-if="relatedModels && id === modelPageId">
+              <b-card-text
                 v-for="info in relatedModels"
                 :key="info.id"
-                @click="addSpec(info)"
                 class="option"
                 variant="light"
               >
                 <b-form-radio
+                  v-model="selected"
                   name="specifications"
                   :value="info"
                   @change="addSpec(info)"
-                  v-model="selected"
                 >
-                  {{ info.title }}
+                  <strong>{{ info.title }}</strong>
+                  <br>
                   <span v-if="info.price != null"> ${{ info.price }}</span>
                 </b-form-radio>
+              </b-card-text>
+            </div>
+            <!-- show at color page -->
+            <div v-else-if="id === colorPageId">
+              <b-button 
+              v-for="(info, i) in information.children"
+              :key="i"
+              :style="{ 
+                backgroundColor: colors[i], 
+                color: colors[i], 
+                borderRadius: '50%', 
+                marginRight: '5px',
+                marginLeft: '5px',
+                width: '50px',
+                height: '50px'
+                }"
+              @click="addSpec(info)"
+              >
+                
               </b-button>
             </div>
-            <div v-else-if="id === 6">
+            <!-- show at trade in smartphone page -->
+            <div v-else-if="id === tradeInSmartPhonePageId">
               <b-form-select
                 v-model="selected"
                 :options="informationOptions"
-                @change="addSpec(selected)"
                 class="form-select"
+                @change="addSpec(selected)"
               >
               </b-form-select>
               <div>
                 <h4>Storage</h4>
-                <b-button
+                <b-card-text
                   v-for="info in tradeInSmartphoneStorages"
                   :key="info.id"
-                  @click="tradeInDiscount(info)"
                   class="option"
                   variant="light"
                 >
                   <b-form-radio
-                    name="storages"
+                  v-model="selectedTradeInStorage"  
+                  name="storages"
                     :value="info"
                     @change="tradeInDiscount(info)"
-                    v-model="selectedTradeInStorage"
                   >
-                    {{ info.title }}
-                    <span v-if="info.price != null"> -${{ info.price }}</span>
+                    <strong>{{ info.title }}</strong>
+                    <br>
+                    <span v-if="info.price != null"> Discount: ${{ info.price }}</span>
                   </b-form-radio>
-                </b-button>
+                </b-card-text>
               </div>
             </div>
             <div v-else>
-              <b-button
-                v-for="info in information.children"
-                :key="info.id"
-                @click="addSpec(info)"
+              <b-card-text
+                v-for="(info, i) in information.children"
+                :key="i"
                 class="option"
                 variant="light"
               >
                 <b-form-radio
-                  name="some-radios"
+                v-model="selected"  
+                name="some-radios"
                   :value="info"
                   @change="addSpec(info)"
-                  v-model="selected"
                 >
-                  {{ info.title }}
+                  <strong>{{ info.title }}</strong>
+                  <br>
+                  <span v-if="id === paymentPageId && i === payMonthlyItemId">for 12 months with 0 interest</span>
                   <span v-if="info.price != null"> ${{ info.price }}</span>
                 </b-form-radio>
-              </b-button>
+              </b-card-text>
             </div>
             <div>
-              <b-button v-if="id === 7" :to="`/checkout`"> Check out </b-button>
+              <b-button v-if="id === paymentPageId" :to="`/checkout`" variant="primary"> Check out </b-button>
             </div>
           </b-card>
         </div>
@@ -103,9 +128,23 @@ export default {
   data() {
     return {
       id: parseInt(this.$route.params.id),
+      payMonthlyItemId: 1,
+      modelPageId: 2,
+      colorPageId: 3,
+      tradeInSmartPhonePageId: 6,
+      paymentPageId: 7,
+      colorVariant: "primary",
+      colors: [ '#5F85DB', '#621055' , '#343a40', '#f8f9fa', '#dc3545'],
       selected: this.$store.state.selectedSpecs.find(
         (i) => i.parent_id === parseInt(this.$route.params.id)
       ),
+      selectedTradeInStorage: this.$store.state.selectedSpecs.find((item) => item.id === 23) 
+        ? this.$store.state.tradeInStorages.find((i) =>
+          this.$store.getters.tradeInSmartphoneStorages.find(
+            (j) => j.parent_id === i.parent_id
+          )
+        )
+        : {}
     }
   },
   computed: {
@@ -126,19 +165,6 @@ export default {
         }
       })
     },
-    tradeInSmartphoneStorageOptions() {
-      const options = this.$store.getters.tradeInSmartphoneStorages
-      if (options) {
-        return options.map((option) => {
-          return {
-            value: option,
-            text: option.title,
-          }
-        })
-      } else {
-        return []
-      }
-    },
     selectedSpec() {
       return this.$store.state.selectedSpecs
     },
@@ -147,17 +173,6 @@ export default {
     },
     tradeInSmartphoneStorages() {
       return this.$store.getters.tradeInSmartphoneStorages
-    },
-    selectedTradeInStorage() {
-      if (this.$store.state.selectedSpecs.find((item) => item.id === 23)) {
-        return this.$store.state.tradeInStorages.find((i) =>
-          this.$store.getters.tradeInSmartphoneStorages.find(
-            (j) => j.parent_id === i.parent_id
-          )
-        )
-      } else {
-        return false
-      }
     },
     checkOut() {
       return this.$store.getters.checkOutCard
@@ -190,7 +205,7 @@ export default {
 .option {
   display: block;
   width: 300px;
-  padding: 20px 0 20px 10px;
+  padding: 10px 0 10px 10px;
   margin: 10px 0 10px 20px;
   text-align: left;
 }

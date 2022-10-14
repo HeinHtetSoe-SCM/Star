@@ -1,7 +1,12 @@
 <template>
   <div>
-    <h1>Star Phone Specifications</h1>
-    <b-card title="Your Star Phone's" sub-title="Selected Specifications">
+    <b-card 
+      title="Your Star Phone's" 
+      sub-title="Selected Specifications"
+      img-src="~/assets/img/starPhone.jpg"
+      img-right
+      >
+      <hr>
       <b-card-text v-for="info in checkOut" :key="info.id">
         <span style="color: #06283d">&#9733; {{ info.title }}</span> :
         {{ info.description }}
@@ -9,22 +14,19 @@
           , {{ selectedTradeInStorage ? selectedTradeInStorage.title : '' }}
         </span>
       </b-card-text>
-    </b-card>
-    <footer>
-      <h1 v-if="payMonthly">
+      <b-list-group>
+      <b-list-group-item v-if="payMonthly">
         Pay: ${{ parseFloat(totalPrice / 12).toFixed(2) }} per month.
         <span>Total: ${{ totalPrice }}</span>
-      </h1>
-      <h1 v-else>Total: ${{ totalPrice }}</h1>
-    </footer>
+      </b-list-group-item>
+      <b-list-group-item v-else>Total: ${{ totalPrice }}</b-list-group-item>
+    </b-list-group>
+    </b-card>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {}
-  },
   computed: {
     checkOut() {
       return this.$store.getters.checkOut
@@ -53,4 +55,9 @@ export default {
 </script>
 
 <style>
+  img {
+    width: 70%;
+    height: 70%;
+    margin-top: 5px;
+  }
 </style>

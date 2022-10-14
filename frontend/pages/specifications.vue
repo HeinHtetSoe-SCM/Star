@@ -14,18 +14,13 @@
       </b-nav>
     </div>
     <div>
-        <nuxt-child :data="data" />
+      <nuxt-child />
     </div>
   </main>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      data: this.$store.state.informations,
-    }
-  },
   computed: {
     tabs() {
       return this.$store.state.informations;
@@ -38,9 +33,6 @@ export default {
 </script>
 
 <style scoped>
-b-nav {
-  display: block !important;
-}
 .tabs {
   color: #06283D !important;
 }
