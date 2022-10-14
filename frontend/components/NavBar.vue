@@ -3,7 +3,7 @@
     <b-container fluid>
       <b-row fluid>
         <b-col>
-          <nuxt-link :to="{name: 'index'}">
+          <nuxt-link :to="{ name: 'index' }">
             <h1 class="title">&#9733; Star</h1>
           </nuxt-link>
         </b-col>
@@ -13,19 +13,17 @@
 </template>
 
 <script>
-export default {
-
-}
+export default {}
 </script>
 
 <style scoped>
-  .title {
-    color: white;
-    text-align: left;
-    font-size: 24px;
-  }
-  .container {
-    margin-top: 0px;
-    background-color: #06283D;
-  }
+.title {
+  color: white;
+  text-align: left;
+  font-size: 24px;
+}
+.container {
+  margin-top: 0px;
+  background-color: #06283d;
+}
 </style>

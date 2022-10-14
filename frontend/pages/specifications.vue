@@ -23,10 +23,10 @@
 export default {
   computed: {
     tabs() {
-      return this.$store.state.informations;
+      return this.$store.state.informations
     },
-    tradeInTabs () {
-      return this.$store.getters.tradeInTabs;
+    tradeInTabs() {
+      return this.$store.getters.tradeInTabs
     },
   },
 }
@@ -34,6 +34,6 @@ export default {
 
 <style scoped>
 .tabs {
-  color: #06283D !important;
+  color: #06283d !important;
 }
 </style>

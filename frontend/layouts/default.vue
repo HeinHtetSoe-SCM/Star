@@ -7,14 +7,14 @@
 
 <script>
 export default {
-  mounted () {
+  mounted() {
     this.$store.dispatch('fetchSpecs')
-  }
+  },
 }
 </script> 
 
 <style>
-  h1 {
-    color: #06283D;
-  }
+h1 {
+  color: #06283d;
+}
 </style>

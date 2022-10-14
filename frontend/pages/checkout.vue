@@ -1,12 +1,12 @@
 <template>
   <div>
-    <b-card 
-      title="Your Star Phone's" 
+    <b-card
+      title="Your Star Phone's"
       sub-title="Selected Specifications"
       img-src="~/assets/img/starPhone.jpg"
       img-right
-      >
-      <hr>
+    >
+      <hr />
       <b-card-text v-for="info in checkOut" :key="info.id">
         <span style="color: #06283d">&#9733; {{ info.title }}</span> :
         {{ info.description }}
@@ -15,12 +15,12 @@
         </span>
       </b-card-text>
       <b-list-group>
-      <b-list-group-item v-if="payMonthly">
-        Pay: ${{ parseFloat(totalPrice / 12).toFixed(2) }} per month.
-        <span>Total: ${{ totalPrice }}</span>
-      </b-list-group-item>
-      <b-list-group-item v-else>Total: ${{ totalPrice }}</b-list-group-item>
-    </b-list-group>
+        <b-list-group-item v-if="payMonthly">
+          Pay: ${{ parseFloat(totalPrice / 12).toFixed(2) }} per month.
+          <span>Total: ${{ totalPrice }}</span>
+        </b-list-group-item>
+        <b-list-group-item v-else>Total: ${{ totalPrice }}</b-list-group-item>
+      </b-list-group>
     </b-card>
   </div>
 </template>
@@ -55,9 +55,9 @@ export default {
 </script>
 
 <style>
-  img {
-    width: 70%;
-    height: 70%;
-    margin-top: 5px;
-  }
+img {
+  width: 70%;
+  height: 70%;
+  margin-top: 5px;
+}
 </style>
