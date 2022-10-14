@@ -17,18 +17,36 @@ $ cd backend
 ```bash
 $ composer install
 ```
-3. Install closure table ```bash composer require franzose/closure-table```
-4. Create closure table ```bash php artisan closuretable:make StarPhone```
-5. Connect your database in .env file
-6. After that, run these following commands
-```bash $ php artisan migrate```
-```bash $ php artisan db:seed```
-```bash $ php artisan serve```
+3. Install closure table 
+```bash 
+$ composer require franzose/closure-table
+```
+5. Create closure table 
+```bash 
+$ php artisan closuretable:make StarPhone
+```
+7. Connect your database in .env file
+8. After that, run these following commands
+```bash 
+$ php artisan migrate
+```
+```bash 
+$ php artisan db:seed
+```
+```bash 
+$ php artisan serve
+```
 
 ### Setup Frontend
 1. Go to frontend folder
-```bash $ cd frontend```
+```bash 
+$ cd frontend
+```
 2. Install npm
-```bash $ npm install```
+```bash 
+$ npm install
+```
 3. Run development server
-```bash $ npm run dev```
+```bash 
+$ npm run dev
+```
