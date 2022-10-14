@@ -9,8 +9,10 @@ Nuxt and Laravel OJT Project
 `$ cd backend`
 2. Install composer
 `$ composer install`
-3. Connect your database in .env file
-4. After that, run these following commands
+3. Install closure table `composer require franzose/closure-table`
+4. Create closure table `php artisan closuretable:make StarPhone`
+5. Connect your database in .env file
+6. After that, run these following commands
 `$ php artisan migrate`
 `$ php artisan db:seed`
 `$ php artisan serve`
