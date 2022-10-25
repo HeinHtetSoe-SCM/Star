@@ -17,6 +17,21 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
+      - run:
+          name: Prepare backend
+          command: |
+            cd backend
+            cp .env.example .env
+            composer install
+            php artisan migrate
+            php artisan db:seed
+            php artisan serve
+      - run:
+          name: Prepare frontend
+          command: |
+          cd frontend
+          npm install
+          npm run dev
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
