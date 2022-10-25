@@ -18,7 +18,23 @@ jobs:
           name: "Say hello"
           command: "echo Hello, World!"
       - run: php --version
-
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "composer.json" }}
+            - v1-dependencies-
+      - run:
+          name: "Install dependencies"
+          command: composer install -n --prefer-dist
+      - save_cache:
+          key: v1-dependencies-{{ checksum "composer.json" }}
+          paths: 
+            - ./vendor
+      - run:
+          name: "Create environment file"
+          command: |
+            cp .env.example .env
+            php artisan key:generate
+            
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
