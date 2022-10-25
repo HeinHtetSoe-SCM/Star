@@ -17,21 +17,23 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
-      - run: composer install
-      - run: npm install
       - run:
           name: Prepare backend
+          shell: /bin/bash
           command: |
             cd backend
+            composer install
             cp .env.example .env
             php artisan migrate
             php artisan db:seed
             php artisan serve
       - run:
           name: Prepare frontend
+          shell: /bin/bash
           command: |
             cd ..
             cd frontend
+            npm install
             npm run dev
 
 # Invoke jobs via workflows
