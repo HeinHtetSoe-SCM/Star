@@ -17,6 +17,8 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
+      - run: composer install
+      - run: npm install
       - run:
           name: Prepare backend
           command: |
