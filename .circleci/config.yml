@@ -20,13 +20,15 @@ jobs:
       - run: php --version
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "composer.json" }}
+            - v1-dependencies-{{ checksum "backend/composer.json" }}
             - v1-dependencies-
       - run:
           name: "Install dependencies"
-          command: composer install -n --prefer-dist
+          command: |
+            cd backend
+            composer install -n --prefer-dist
       - save_cache:
-          key: v1-dependencies-{{ checksum "composer.json" }}
+          key: v1-dependencies-{{ checksum "backend/composer.json" }}
           paths: 
             - ./vendor
       - run:
