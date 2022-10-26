@@ -26,6 +26,7 @@ jobs:
           name: "Install dependencies"
           command: |
             cd backend
+            composer update
             composer install -n --prefer-dist
       - save_cache:
           key: v1-dependencies-{{ checksum "backend/composer.json" }}
