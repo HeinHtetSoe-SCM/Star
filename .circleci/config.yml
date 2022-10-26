@@ -35,7 +35,8 @@ jobs:
       - run:
           name: "Create environment file"
           command: |
-            cp backend/.env.example backend/.env
+            cd backend
+            cp .env.example .env
             php artisan key:generate
             
 # Invoke jobs via workflows
